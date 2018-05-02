@@ -1,0 +1,23 @@
+dataSource:
+  ds_0: !!com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/ds_0
+    driverClassName: com.mysql.jdbc.Driver
+    username: root
+    password: Zhu0307#
+
+tables:
+  user:
+    actualTables: user${0..1}
+    tableStrategy:
+      shardingColumns: id
+      algorithmExpression: user${id.longValue() % 2}
+
+bindingTables:
+  - tableNames: user
+
+defaultDatabaseStrategy:
+  shardingColumns: id
+  algorithmExpression: ds_0
+  
+props:
+  sql.show: true
